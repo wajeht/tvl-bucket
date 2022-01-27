@@ -1,0 +1,18 @@
+{
+	"name": "tvl-bucket",
+	"version": "1.0.0",
+	"description": "Video upload api from lifting-video-log",
+	"main": "bin/server.js",
+	"scripts": {
+		"start": "node bin/server.js"
+	},
+	"keywords": [
+		"video",
+		"logging",
+		"lifting",
+		"powerlifting",
+		"fitness"
+	],
+	"author": "wajeht",
+	"license": "MIT"
+}
