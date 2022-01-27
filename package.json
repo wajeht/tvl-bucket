@@ -1,7 +1,7 @@
 {
 	"name": "tvl-bucket",
 	"version": "1.0.0",
-	"description": "Video upload api from lifting-video-log",
+	"description": "Video upload api for lifting-video-log",
 	"main": "bin/server.js",
 	"scripts": {
 		"start": "node bin/server.js"
