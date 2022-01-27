@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-const { getSingleVideo } = require('./video.controller.js');
+const videoRouter = require('./video/video.router.js');
 
-router.get('/', getSingleVideo);
+router.use('/video', videoRouter);
 
 module.exports = router;
