@@ -4,7 +4,8 @@
 	"description": "Video upload api for lifting-video-log",
 	"main": "bin/server.js",
 	"scripts": {
-		"start": "node bin/server.js"
+		"start": "node bin/server.js",
+		"dev": "nodemon bin/server.js"
 	},
 	"keywords": [
 		"video",
@@ -14,5 +15,11 @@
 		"fitness"
 	],
 	"author": "wajeht",
-	"license": "MIT"
+	"license": "MIT",
+	"dependencies": {
+		"express": "^4.17.2"
+	},
+	"devDependencies": {
+		"nodemon": "^2.0.15"
+	}
 }
