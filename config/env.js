@@ -18,4 +18,5 @@ module.exports = {
 	cookie: {
 		secret: process.env.COOKIE_SECRET,
 	},
+	env: process.env.NODE_ENV,
 };

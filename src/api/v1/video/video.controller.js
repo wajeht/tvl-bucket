@@ -1,49 +1,58 @@
+const VideoModel = require('./video.model.js');
 class VideoController {
 	getVideo = async (req, res, next) => {
+		const { id } = req.params;
+		const video = await VideoModel.getVideo(id);
+
 		res.status(200).json({
 			request_url: req.originalUrl,
 			message: 'A single video has returned',
-			data: [
-				{
-					name: 'squat training',
-					description:
-						'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
-					screenshot_url: '/jaw/storage/upload/jaw/screenshot.jpg',
-					video_url: '/jaw/storage/upload/jaw/video.mp4',
-					date_stamp: '12/12/2020 5:00AM',
-				},
-			],
+			data: video,
 		});
 	};
 
 	getVideos = async (req, res, next) => {
+		const videos = await VideoModel.getVideos();
+
 		res.status(200).json({
 			request_url: req.originalUrl,
 			message: 'Many videos have returned',
-			data: [
-				{
-					name: 'squat training',
-					description:
-						'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
-					screenshot_url: '/jaw/storage/upload/jaw/screenshot.jpg',
-					video_url: '/jaw/storage/upload/jaw/video.mp4',
-					date_stamp: '12/12/2020 5:00AM',
-				},
-				{
-					name: 'bench training',
-					description:
-						'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
-					screenshot_url: '/jaw/storage/upload/jaw/screenshot.jpg',
-					video_url: '/jaw/storage/upload/jaw/video.mp4',
-					date_stamp: '11/11/2000 3:00AM',
-				},
-			],
+			data: videos,
 		});
 	};
 
-	postVideo = async (req, res, next) => {};
-	updateVideo = async (req, res, next) => {};
-	deleteVideo = async (req, res, next) => {};
+	postVideo = async (req, res, next) => {
+		const video = await VideoModel.postVideo(req.body);
+
+		res.status(201).json({
+			request_url: req.originalUrl,
+			message: 'A single video has posted',
+			data: video,
+		});
+	};
+
+	updateVideo = async (req, res, next) => {
+		const { id } = req.params;
+		const video = await VideoModel.updateVideo(id, req.body);
+
+		res.status(201).json({
+			request_url: req.originalUrl,
+			message: 'A single video has updated',
+			data: video,
+		});
+	};
+
+	deleteVideo = async (req, res, next) => {
+		const { id } = req.params;
+		const video = await VideoModel.deleteVideo(id);
+
+		res.status(201).json({
+			request_url: req.originalUrl,
+			message: 'A single video has deleted',
+			data: video,
+		});
+
+	};
 }
 
 module.exports = new VideoController();

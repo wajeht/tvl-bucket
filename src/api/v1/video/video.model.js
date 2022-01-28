@@ -1,3 +1,5 @@
+const db = require('../../../../database/db.js');
+
 class VideoModel {
 	getVideo = (id) => {
 		return db.select('*').from('video').where({ id });
@@ -7,16 +9,30 @@ class VideoModel {
 		return db.select('*').from('video');
 	};
 
-	postVideo = (object) => {
-		return db.insert(object).into('video').where({ id });
+	postVideo = (video) => {
+		return db
+			.insert({
+				screenshot_path: video.screenshot_path,
+				video_path: video.video_path,
+				user_id: video.user_id,
+			})
+			.into('video')
+			.returning('*');
 	};
 
-	updateVideo = (object) => {
-		return db.update(object).from('video').where({ id });
+	updateVideo = (id, video) => {
+		return db
+			.update({
+				screenshot_path: video.screenshot_path,
+				video_path: video.video_path,
+			})
+			.from('video')
+			.where({ id })
+			.returning('*');
 	};
 
 	deleteVideo = (id) => {
-		return db.delete('*').from('video').where({ id });
+		return db.del().from('video').where({ id }).returning('*');
 	};
 }
 
