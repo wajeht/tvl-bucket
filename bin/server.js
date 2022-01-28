@@ -1,6 +1,6 @@
 const app = require('../src/app.js');
-const PORT = 3001;
+const { port } = require('../config/env.js');
 
-app.listen(PORT, () => {
-	console.log(`http://localhost:${PORT}`);
+app.listen(port, () => {
+	console.log(`http://localhost:${port}`);
 });

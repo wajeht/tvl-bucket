@@ -5,7 +5,12 @@
 	"main": "bin/server.js",
 	"scripts": {
 		"start": "node bin/server.js",
-		"dev": "nodemon bin/server.js"
+		"dev": "nodemon bin/server.js",
+		"migrate:make": "knex migrate:make --knexfile=./database/knexfile.js",
+		"migrate:latest": "knex migrate:latest --knexfile=./database/knexfile.js",
+		"migrate:rollback": "knex migrate:rollback --knexfile=./database/knexfile.js",
+		"seed:make": "knex seed:make --knexfile=./database/knexfile.js",
+		"seed:run": "knex seed:run --knexfile=./database/knexfile.js"
 	},
 	"keywords": [
 		"video",
@@ -17,7 +22,10 @@
 	"author": "wajeht",
 	"license": "MIT",
 	"dependencies": {
-		"express": "^4.17.2"
+		"dotenv": "^14.3.2",
+		"express": "^4.17.2",
+		"knex": "^1.0.1",
+		"pg": "^8.7.1"
 	},
 	"devDependencies": {
 		"nodemon": "^2.0.15"
