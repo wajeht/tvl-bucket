@@ -1,21 +1,21 @@
 const express = require('express');
 const router = express.Router();
 
+const { uploadVideo } = require('../../../middlewares/upload.js');
+
 const {
 	getVideo,
 	getVideos,
 	postVideo,
 	updateVideo,
-  deleteVideo,
+	deleteVideo,
 } = require('./video.controller.js');
 
-router.route('/')
-      .get(getVideos)
-      .post(postVideo);
+router.get('/', getVideos);
+router.post('/', uploadVideo, postVideo);
 
-router.route('/:id')
-      .get(getVideo)
-      .put(updateVideo)
-      .delete(deleteVideo);
+router.get('/:id', getVideo);
+router.put('/:id', uploadVideo, updateVideo);
+router.delete('/:id', deleteVideo);
 
 module.exports = router;
