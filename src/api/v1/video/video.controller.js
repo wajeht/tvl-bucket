@@ -4,6 +4,14 @@ class VideoController {
 		const { id } = req.params;
 		const video = await VideoModel.getVideo(id);
 
+		if (!video.length) {
+			return res.status(404).json({
+				request_url: req.originalUrl,
+				message: 'Not found',
+				data: [],
+			});
+		}
+
 		res.status(200).json({
 			request_url: req.originalUrl,
 			message: 'A single video has returned',
@@ -51,7 +59,6 @@ class VideoController {
 			message: 'A single video has deleted',
 			data: video,
 		});
-
 	};
 }
 

@@ -22,8 +22,10 @@
 	"author": "wajeht",
 	"license": "MIT",
 	"dependencies": {
+		"compression": "^1.7.4",
 		"dotenv": "^14.3.2",
 		"express": "^4.17.2",
+		"helmet": "^5.0.2",
 		"knex": "^1.0.1",
 		"pg": "^8.7.1"
 	},
