@@ -5,10 +5,10 @@ class File {
 	#file_path = null;
 	#file = null;
 
-  /**
-   *
-   * @param {String} file_path
-   */
+	/**
+	 *
+	 * @param {String} file_path
+	 */
 	constructor(file_path) {
 		let file = fs.existsSync(file_path);
 		if (!file) {
@@ -51,20 +51,20 @@ class File {
 		return bytes.toFixed(dp) + ' ' + units[u];
 	};
 
-  /**
-   *
-   * @returns file size in human readable format
-   */
+	/**
+	 *
+	 * @returns file size in human readable format
+	 */
 	#getFileSize = async () => {
 		let fileSize = await fs.promises.stat(this.#file_path);
 		fileSize = this.#getHumanReadableFileSize(fileSize.size);
 		return fileSize;
 	};
 
-  /**
-   *
-   * @returns file object that contains all file info
-   */
+	/**
+	 *
+	 * @returns file object that contains all file info
+	 */
 	getFileStats = async () => {
 		this.#file = {
 			name: path.basename(this.#file_path).split('.')[0],
