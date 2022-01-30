@@ -1,4 +1,5 @@
 const VideoModel = require('./video.model.js');
+
 class VideoController {
 	getVideo = async (req, res, next) => {
 		const { id } = req.params;
