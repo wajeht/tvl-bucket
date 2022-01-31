@@ -19,8 +19,13 @@ app.use('/api/v1', isAuth, v1);
 
 app.use('*', (req, res, next) => {
 	res.status(403).json({
-		message: "You don't have permission to access / on this server.!",
+		request_url: req.originalUrl,
+		message: `You don't have permission to access ${req.originalUrl} on this server.!`,
 	});
+});
+
+app.use((err, req, res, next) => {
+	res.status(500).json({ request_url: req.originalUrl, message: err.message });
 });
 
 module.exports = app;
