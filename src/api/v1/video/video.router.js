@@ -11,11 +11,14 @@ const {
 	deleteVideo,
 } = require('./video.controller.js');
 
-router.get('/', getVideos);
-router.post('/', uploadVideo, postVideo);
+router.route('/')
+			.get(getVideos)
+			.post(uploadVideo, postVideo);
 
-router.get('/:id', getVideo);
-router.put('/:id', uploadVideo, updateVideo);
-router.delete('/:id', deleteVideo);
+router.route('/:id')
+			.get(getVideo)
+			.put(uploadVideo, updateVideo)
+			.delete(deleteVideo);
+
 
 module.exports = router;
