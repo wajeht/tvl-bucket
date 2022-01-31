@@ -15,13 +15,14 @@ const isAuth = (req, res, next) => {
 			.then((res) => {
 				if (res.length) {
 					const { hashed_key } = res[0];
-					bcrypt.compare(api, hashed_key).then((same) => {
+					return bcrypt.compare(api, hashed_key).then((same) => {
 						if (!same) {
-							throw new Error('Invalid api key!');
+							throw new Error('Wrong api key!');
 						}
 						next();
 					});
 				}
+				throw new Error('Invalid api key!');
 			});
 	} catch (err) {
 		next(err);
