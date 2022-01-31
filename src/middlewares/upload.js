@@ -17,7 +17,8 @@ const fileFilter = (req, file, cb) => {
 
 const fileStorage = multer.diskStorage({
 	destination: (req, file, cb) => {
-		const { username } = req.session;
+		// const { username } = req.session;
+		const username = 'jaw';
 		cb(null, `public/upload/${username}/`);
 	},
 	filename: (req, file, cb) => {
