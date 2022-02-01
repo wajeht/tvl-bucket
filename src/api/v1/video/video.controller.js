@@ -31,7 +31,7 @@ class VideoController {
 	};
 
 	postVideo = async (req, res, next) => {
-		const video = await VideoModel.postVideo(req.body);
+		const video = await VideoModel.postVideo(req.body, req.file);
 
 		res.status(201).json({
 			request_url: req.originalUrl,
