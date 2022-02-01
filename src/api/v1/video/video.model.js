@@ -9,15 +9,27 @@ class VideoModel {
 		return db.select('*').from('video');
 	};
 
-	postVideo = (video) => {
+	postVideo = (body, video) => {
 		return db
 			.insert({
-				screenshot_path: video.screenshot_path,
-				video_path: video.video_path,
-				user_id: video.user_id,
+				username: body.username,
+				user_id: body.user_id,
+				video_path: video.path,
 			})
 			.into('video')
-			.returning('*');
+			.returning('*')
+			.then(async (res) => {
+				const [row] = res;
+				const x = await db
+					.insert({
+						filename: video.filename,
+						size: video.size,
+						mimetype: video.mimetype,
+						video_id: row.id,
+					})
+					.into('video_details');
+				return row;
+			});
 	};
 
 	updateVideo = (id, video) => {
