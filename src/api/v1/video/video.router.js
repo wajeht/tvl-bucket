@@ -17,7 +17,7 @@ router.route('/')
 
 router.route('/:id')
 			.get(getVideo)
-			.put(uploadVideo, updateVideo)
+			.patch(uploadVideo, updateVideo)
 			.delete(deleteVideo);
 
 
