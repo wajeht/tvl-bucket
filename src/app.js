@@ -8,6 +8,7 @@ const v1 = require('./api/v1/index.js');
 
 const compression = require('compression');
 const helmet = require('helmet');
+const httpStatus = require('http-status');
 
 app.use(helmet());
 app.use(compression());
@@ -18,14 +19,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api/v1', isAuth, v1);
 
 app.use((req, res, next) => {
-	res.status(404).json({
+	res.status(httpStatus.NOT_FOUND).json({
 		request_url: req.originalUrl,
 		message: `You don't have permission to access ${req.originalUrl} on this server.!`,
 	});
 });
 
 app.use((err, req, res, next) => {
-	res.status(500).json({ request_url: req.originalUrl, message: err.message });
+	res
+		.status(httpStatus.INTERNAL_SERVER_ERROR)
+		.json({ request_url: req.originalUrl, message: err.message });
 });
 
 module.exports = app;
