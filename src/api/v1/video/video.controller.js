@@ -7,13 +7,14 @@ class VideoController {
 
 		if (!video.length) {
 			return res.status(404).json({
+				status: 'fail',
 				request_url: req.originalUrl,
-				message: 'Not found',
-				data: [],
+				message: `Could not find any resource with id: ${id}!`,
 			});
 		}
 
 		res.status(200).json({
+			status: 'success',
 			request_url: req.originalUrl,
 			message: 'A single video has returned',
 			data: video,
@@ -24,6 +25,7 @@ class VideoController {
 		const videos = await VideoModel.getVideos();
 
 		res.status(200).json({
+			status: 'success',
 			request_url: req.originalUrl,
 			message: 'Many videos have returned',
 			data: videos,
@@ -34,6 +36,7 @@ class VideoController {
 		const video = await VideoModel.postVideo(req.body, req.file);
 
 		res.status(201).json({
+			status: 'success',
 			request_url: req.originalUrl,
 			message: 'A single video has posted',
 			data: video,
@@ -45,6 +48,7 @@ class VideoController {
 		const video = await VideoModel.updateVideo(id, req.body);
 
 		res.status(201).json({
+			status: 'success',
 			request_url: req.originalUrl,
 			message: 'A single video has updated',
 			data: video,
@@ -55,7 +59,16 @@ class VideoController {
 		const { id } = req.params;
 		const video = await VideoModel.deleteVideo(id);
 
+		if (!video.length) {
+			return res.status(404).json({
+				status: 'fail',
+				request_url: req.originalUrl,
+				message: `Could not find any resource with id: ${id}!`,
+			});
+		}
+
 		res.status(201).json({
+			status: 'success',
 			request_url: req.originalUrl,
 			message: 'A single video has deleted',
 			data: video,

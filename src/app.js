@@ -17,8 +17,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api/v1', isAuth, v1);
 
-app.use('*', (req, res, next) => {
-	res.status(403).json({
+app.use((req, res, next) => {
+	res.status(404).json({
 		request_url: req.originalUrl,
 		message: `You don't have permission to access ${req.originalUrl} on this server.!`,
 	});
