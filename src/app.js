@@ -3,7 +3,7 @@ const app = express();
 
 const path = require('path');
 
-const { isAuth } = require('../src/middlewares/auth.js');
+const { auth } = require('../src/middlewares/auth.js');
 const v1 = require('./api/v1/index.js');
 
 const compression = require('compression');
@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/api/v1', isAuth, v1);
+app.use('/api/v1', auth, v1);
 
 app.use((req, res, next) => {
 	res.status(StatusCodes.NOT_FOUND).json({

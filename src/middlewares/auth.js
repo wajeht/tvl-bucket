@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs');
 const db = require('../../database/db.js');
 
-const isAuth = async (req, res, next) => {
+const auth = async (req, res, next) => {
 	try {
 		const api = req.get('X-API-KEY');
 
@@ -29,4 +29,4 @@ const isAuth = async (req, res, next) => {
 	}
 };
 
-module.exports = { isAuth };
+module.exports = { auth };
