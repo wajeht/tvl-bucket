@@ -19,4 +19,5 @@ module.exports = {
 		secret: process.env.COOKIE_SECRET,
 	},
 	env: process.env.NODE_ENV,
+	jwt_secret: process.env.JWT_SECRET,
 };
