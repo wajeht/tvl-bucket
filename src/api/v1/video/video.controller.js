@@ -1,5 +1,5 @@
 const VideoModel = require('./video.model.js');
-const httpStatus = require('http-status');
+const { StatusCodes } = require('http-status-codes');
 
 class VideoController {
 	getVideo = async (req, res, next) => {
@@ -7,14 +7,14 @@ class VideoController {
 		const video = await VideoModel.getVideo(id);
 
 		if (!video.length) {
-			return res.status(httpStatus.NOT_FOUND).json({
+			return res.status(StatusCodes.NOT_FOUND).json({
 				status: 'fail',
 				request_url: req.originalUrl,
 				message: `Could not find any resource with id: ${id}!`,
 			});
 		}
 
-		res.status(httpStatus.OK).json({
+		res.status(StatusCodes.OK).json({
 			status: 'success',
 			request_url: req.originalUrl,
 			message: 'A single video has returned',
@@ -25,7 +25,7 @@ class VideoController {
 	getVideos = async (req, res, next) => {
 		const videos = await VideoModel.getVideos();
 
-		res.status(httpStatus.OK).json({
+		res.status(StatusCodes.OK).json({
 			status: 'success',
 			request_url: req.originalUrl,
 			message: 'Many videos have returned',
@@ -36,7 +36,7 @@ class VideoController {
 	postVideo = async (req, res, next) => {
 		const video = await VideoModel.postVideo(req.body, req.file);
 
-		res.status(httpStatus.CREATED).json({
+		res.status(StatusCodes.CREATED).json({
 			status: 'success',
 			request_url: req.originalUrl,
 			message: 'A single video has posted',
@@ -48,7 +48,7 @@ class VideoController {
 		const { id } = req.params;
 		const video = await VideoModel.updateVideo(id, req.body);
 
-		res.status(httpStatus.OK).json({
+		res.status(StatusCodes.OK).json({
 			status: 'success',
 			request_url: req.originalUrl,
 			message: 'A single video has updated',
@@ -61,14 +61,14 @@ class VideoController {
 		const video = await VideoModel.deleteVideo(id);
 
 		if (!video.length) {
-			return res.status(httpStatus.NOT_FOUND).json({
+			return res.status(StatusCodes.NOT_FOUND).json({
 				status: 'fail',
 				request_url: req.originalUrl,
 				message: `Could not find any resource with id: ${id}!`,
 			});
 		}
 
-		res.status(httpStatus.OK).json({
+		res.status(StatusCodes.OK).json({
 			status: 'success',
 			request_url: req.originalUrl,
 			message: 'A single video has deleted',
