@@ -2,21 +2,25 @@
 
 const crypto = require('crypto');
 const bcrypt = require('bcryptjs');
-
-const { program } = require('commander');
-
 const db = require('../database/db.js');
 
-const APIKey = crypto.randomUUID();
+(async () => {
+	try {
+		const APIKey = crypto.randomUUID();
 
-bcrypt.hash(APIKey, 10).then((hashedAPIKey) => {
-	db.insert({ key: APIKey, hashed_key: hashedAPIKey })
-		.into('api_key')
-		.returning('*')
-		.then((res) => {
-			if (res.length) {
-				console.log({ 'X-API-KEY': APIKey });
-				process.exit(1);
-			}
-		});
-});
+		const hashedApiKey = await bcrypt.hash(APIKey, 10);
+		if (!hashedApiKey) throw new Error('Something went wrong while hashing your API key!');
+
+		const storeApiKey = await db.insert({ key: APIKey, hashed_key: hashedApiKey })
+																.into('api_key')
+																.returning('*');
+		if (!storeApiKey.length)throw new Error('Something went wrong while storing your API key!');
+
+		console.log({ 'X-API-KEY': APIKey });
+		process.exit(1);
+
+	} catch (err) {
+		console.log(err);
+		process.exit(1);
+	}
+})();
