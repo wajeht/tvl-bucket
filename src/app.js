@@ -8,7 +8,7 @@ const v1 = require('./api/v1/index.js');
 
 const compression = require('compression');
 const helmet = require('helmet');
-const { errorHandler } = require('./middlewares/error.js');
+const { errorHandler, notFoundHandler } = require('./middlewares/error.js');
 
 app.use(helmet());
 app.use(compression());
