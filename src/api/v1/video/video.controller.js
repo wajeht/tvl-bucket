@@ -1,8 +1,9 @@
 const VideoModel = require('./video.model.js');
 const { StatusCodes } = require('http-status-codes');
+const { asyncHandler } = require('../../../middlewares/async-handler.js');
 
 class VideoController {
-	getVideo = async (req, res, next) => {
+	getVideo = asyncHandler(async (req, res, next) => {
 		const { id } = req.params;
 		const video = await VideoModel.getVideo(id);
 
@@ -20,9 +21,9 @@ class VideoController {
 			message: 'A single video has returned',
 			data: video,
 		});
-	};
+	});
 
-	getVideos = async (req, res, next) => {
+	getVideos = asyncHandler(async (req, res, next) => {
 		const videos = await VideoModel.getVideos();
 
 		res.status(StatusCodes.OK).json({
@@ -31,9 +32,9 @@ class VideoController {
 			message: 'Many videos have returned',
 			data: videos,
 		});
-	};
+	});
 
-	postVideo = async (req, res, next) => {
+	postVideo = asyncHandler(async (req, res, next) => {
 		const video = await VideoModel.postVideo(req.body, req.file);
 
 		res.status(StatusCodes.CREATED).json({
@@ -42,9 +43,9 @@ class VideoController {
 			message: 'A single video has posted',
 			data: video,
 		});
-	};
+	});
 
-	updateVideo = async (req, res, next) => {
+	updateVideo = asyncHandler(async (req, res, next) => {
 		const { id } = req.params;
 		const video = await VideoModel.updateVideo(id, req.body);
 
@@ -54,9 +55,9 @@ class VideoController {
 			message: 'A single video has updated',
 			data: video,
 		});
-	};
+	});
 
-	deleteVideo = async (req, res, next) => {
+	deleteVideo = asyncHandler(async (req, res, next) => {
 		const { id } = req.params;
 		const video = await VideoModel.deleteVideo(id);
 
@@ -74,7 +75,7 @@ class VideoController {
 			message: 'A single video has deleted',
 			data: video,
 		});
-	};
+	});
 }
 
 module.exports = new VideoController();
