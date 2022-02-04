@@ -24,7 +24,6 @@
 	"license": "MIT",
 	"dependencies": {
 		"bcryptjs": "^2.4.3",
-		"commander": "^9.0.0",
 		"compression": "^1.7.4",
 		"dotenv": "^14.3.2",
 		"express": "^4.17.2",
