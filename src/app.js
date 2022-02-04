@@ -8,7 +8,7 @@ const v1 = require('./api/v1/index.js');
 
 const compression = require('compression');
 const helmet = require('helmet');
-const StatusCodes = require('http-status-codes');
+const StatusCodes = require('http-status-codes').StatusCodes;
 
 app.use(helmet());
 app.use(compression());
