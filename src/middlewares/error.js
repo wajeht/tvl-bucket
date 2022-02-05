@@ -2,8 +2,9 @@ const StatusCodes = require('http-status-codes').StatusCodes;
 
 const notFoundHandler = (req, res, next) => {
 	res.status(StatusCodes.NOT_FOUND).json({
+		status: 'fail',
 		request_url: req.originalUrl,
-		message: `You don't have permission to access ${req.originalUrl} on this server.!`,
+		message: 'The resource does not exist!',
 	});
 };
 
