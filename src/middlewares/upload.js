@@ -50,7 +50,14 @@ const upload = multer({
 	},
 });
 
-const uploadVideo = upload.single('video');
+const uploadVideo = async (req, res, next) => {
+	try {
+		upload.single('video');
+		next();
+	} catch (err) {
+		next(err);
+	}
+};
 
 module.exports = {
 	uploadVideo,
