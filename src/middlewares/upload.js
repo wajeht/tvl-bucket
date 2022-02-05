@@ -22,20 +22,10 @@ const fileStorage = multer.diskStorage({
 	destination: (req, file, cb) => {
 		const { username } = req.body;
 		const userFolder = path.join(root, `src/public/upload/${username}`);
-
-		// if !folder, make one
-		// TODO: fix a bug where it breaks on no upload folder
-		if (!fs.existsSync(userFolder)) {
-			fs.mkdir(userFolder, { recursive: true }, (err) => {
-				if (!err) {
-					throw new Error(
-						`Something went wrong while making a folder for ${username}'s upload!`,
-					);
-				}
-			});
-		}
-
-		cb(null, userFolder);
+		setTimeout(() => {
+			cb(null, userFolder);
+		}, 1);
+		fs.mkdir(userFolder, { recursive: true }, (err) => true);
 	},
 	filename: (req, file, cb) => {
 		cb(null, uuid() + '.' + file.originalname.split('.')[1]);
@@ -50,14 +40,7 @@ const upload = multer({
 	},
 });
 
-const uploadVideo = async (req, res, next) => {
-	try {
-		upload.single('video');
-		next();
-	} catch (err) {
-		next(err);
-	}
-};
+const uploadVideo = upload.single('video');
 
 module.exports = {
 	uploadVideo,
