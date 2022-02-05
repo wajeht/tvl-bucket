@@ -14,7 +14,7 @@ class VideoModel {
 			.insert({
 				username: body.username,
 				user_id: body.user_id,
-				video_path: video.path,
+				video_path: video.path.slice(video.path.indexOf('/upload')),
 			})
 			.into('video')
 			.returning('*')
@@ -26,6 +26,7 @@ class VideoModel {
 						size: video.size,
 						mimetype: video.mimetype,
 						video_id: row.id,
+						absolute_video_path: video.path,
 					})
 					.into('video_details');
 				return row;

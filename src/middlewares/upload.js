@@ -24,7 +24,7 @@ const fileStorage = multer.diskStorage({
 		const userFolder = path.join(root, `src/public/upload/${username}`);
 		setTimeout(() => {
 			cb(null, userFolder);
-		}, 1);
+		}, 5);
 		fs.mkdir(userFolder, { recursive: true }, (err) => true);
 	},
 	filename: (req, file, cb) => {

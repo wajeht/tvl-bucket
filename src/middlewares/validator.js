@@ -1,3 +1,4 @@
+const fs = require('fs').promises;
 const { validationResult } = require('express-validator');
 const { StatusCodes } = require('http-status-codes');
 
@@ -11,6 +12,12 @@ const validate = (schemas) => {
 			if (result.isEmpty()) {
 				return next();
 			}
+
+			// TODO: currently the file is still being uploaded
+			// TODO: even after validation errors occurred
+			// TODO: this little hack will delete the file
+			const { path } = req.file;
+			const removed = await fs.unlink(path);
 
 			const { errors } = result;
 
