@@ -11,14 +11,14 @@ class VideoController {
 			return res.status(StatusCodes.NOT_FOUND).json({
 				status: 'fail',
 				request_url: req.originalUrl,
-				message: `Could not find any resource with id: ${id}!`,
+				message: 'The resource does not exist!',
 			});
 		}
 
 		res.status(StatusCodes.OK).json({
 			status: 'success',
 			request_url: req.originalUrl,
-			message: 'A single video has returned',
+			message: 'The resource was returned successfully!',
 			data: video,
 		});
 	});
@@ -29,7 +29,7 @@ class VideoController {
 		res.status(StatusCodes.OK).json({
 			status: 'success',
 			request_url: req.originalUrl,
-			message: 'Many videos have returned',
+			message: 'The resources were returned successfully!',
 			data: videos,
 		});
 	});
@@ -40,7 +40,7 @@ class VideoController {
 		res.status(StatusCodes.CREATED).json({
 			status: 'success',
 			request_url: req.originalUrl,
-			message: 'A single video has posted',
+			message: 'The resource was created successfully!',
 			data: video,
 		});
 	});
@@ -52,7 +52,7 @@ class VideoController {
 		res.status(StatusCodes.OK).json({
 			status: 'success',
 			request_url: req.originalUrl,
-			message: 'A single video has updated',
+			message: 'The resource was updated successfully!',
 			data: video,
 		});
 	});
@@ -65,14 +65,14 @@ class VideoController {
 			return res.status(StatusCodes.NOT_FOUND).json({
 				status: 'fail',
 				request_url: req.originalUrl,
-				message: `Could not find any resource with id: ${id}!`,
+				message: 'The resource does not exist!',
 			});
 		}
 
 		res.status(StatusCodes.OK).json({
 			status: 'success',
 			request_url: req.originalUrl,
-			message: 'A single video has deleted',
+			message: 'The resource was deleted successfully!',
 			data: video,
 		});
 	});
