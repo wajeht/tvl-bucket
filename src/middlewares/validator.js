@@ -18,7 +18,7 @@ const validate = (schemas) => {
 				status: 'failed',
 				request_url: req.originalUrl,
 				message: 'Validation errors in your request!',
-				data: errors,
+				errors,
 			});
 		} catch (err) {
 			next(err);
