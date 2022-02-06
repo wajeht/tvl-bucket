@@ -2,10 +2,10 @@ const path = require('path');
 const fs = require('fs');
 const { root } = require('./directory.js');
 
-const makeUserDataFolder = async (username) => {
+const makeUserDataFolder = (username) => {
 	try {
 		const currentWeek = new Date().toLocaleDateString().split('/').join('-');
-		const upload = path.join(
+		const folder = path.join(
 			root,
 			'src',
 			'public',
@@ -14,10 +14,11 @@ const makeUserDataFolder = async (username) => {
 			currentWeek,
 		);
 		if (!fs.existsSync(path)) {
-			fs.mkdir(upload, { recursive: true }, (err) => {
+			fs.mkdir(folder, { recursive: true }, (err) => {
 				if (err) throw err;
 			});
 		}
+		return folder;
 	} catch (err) {
 		console.log(err);
 	}
