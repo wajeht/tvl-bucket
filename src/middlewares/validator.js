@@ -13,11 +13,13 @@ const validate = (schemas) => {
 				return next();
 			}
 
-			// TODO: currently the file is still being uploaded
-			// TODO: even after validation errors occurred
-			// TODO: this little hack will delete the file
-			const { path } = req.file;
-			const removed = await fs.unlink(path);
+			if (req.file) {
+				const { path } = req.file;
+				const removed = await fs.unlink(path);
+				// TODO: currently the file is still being uploaded
+				// TODO: even after validation errors occurred
+				// TODO: this little hack will delete the file
+			}
 
 			const { errors } = result;
 
