@@ -1,6 +1,7 @@
 const VideoModel = require('./video.model.js');
 const { StatusCodes } = require('http-status-codes');
 const { asyncHandler } = require('../../../middlewares/async-handler.js');
+const Screenshot = require('../../../../utils/screenshot.js');
 
 class VideoController {
 	getVideo = asyncHandler(async (req, res, next) => {
@@ -36,6 +37,7 @@ class VideoController {
 
 	postVideo = asyncHandler(async (req, res, next) => {
 		const video = await VideoModel.postVideo(req.body, req.file);
+		Screenshot.generate(video, req.file); // generate after 5 sec
 
 		res.status(StatusCodes.CREATED).json({
 			status: 'success',
