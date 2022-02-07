@@ -1,0 +1,34 @@
+version: "3.9"
+services:
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - ${DB_PORT}:${DB_PORT}
+    networks:
+      - tvl-bucket-network
+    volumes:
+      - postgres-data:/data/postgres
+
+  api:
+    image: tvl-bucket
+    build: ./
+    stdin_open: true
+    ports:
+      - "3000:3000"
+    networks:
+      - tvl-bucket-network
+    depends_on:
+      - postgres
+
+networks:
+  tvl-bucket-network:
+    driver: bridge
+
+volumes:
+  postgres-data:
+    driver: local
