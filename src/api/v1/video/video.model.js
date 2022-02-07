@@ -19,19 +19,21 @@ class VideoModel {
 			.into('video')
 			.returning('*')
 			.then(async (res) => {
-				const [row] = res;
-				const x = await db
+				const { id } = res[0];
+				await db
 					.insert({
 						filename: video.filename,
 						size: video.size,
 						mimetype: video.mimetype,
-						video_id: row.id,
+						video_id: id,
 						absolute_video_path: video.path,
 					})
 					.into('video_details');
-				return row;
+				return res;
 			});
 	};
+
+	updateVideoScreenshot = (postBody) => {};
 
 	updateVideo = (id, video) => {
 		return db
