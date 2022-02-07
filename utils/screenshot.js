@@ -8,7 +8,7 @@ class Screenshot {
 				.split('/')
 				.splice(0, path.split('/').length - 1)
 				.join('/');
-			const filename = `${path.split('/').pop().split('.')[0]}.jpg`;
+			const filename = `/${path.split('/').pop().split('.')[0]}.jpg`;
 
 			// take screenshot at the 0 second then save it at
 			ffmpeg(path).screenshots({
@@ -25,7 +25,8 @@ class Screenshot {
 
 	static #update = async (videoId, path) => {
 		try {
-			const newlyGeneratedScreenshotPath = this.#capture(path);
+			const absolutePath = this.#capture(path);
+			const relativePath = absolutePath.slice(absolutePath.indexOf('/upload'));
 
 			// example select with db.raw)
 			// db.raw(
@@ -42,12 +43,12 @@ class Screenshot {
 
 			// TODO: refactor this!
 			await db
-				.update({ screenshot_path: newlyGeneratedScreenshotPath })
+				.update({ screenshot_path: relativePath })
 				.from('video')
 				.where({ id: videoId });
 
 			await db
-				.update({ absolute_screenshot_path: newlyGeneratedScreenshotPath })
+				.update({ absolute_screenshot_path: absolutePath })
 				.from('video_details')
 				.where({ video_id: videoId });
 
