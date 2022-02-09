@@ -1,83 +1,92 @@
-const VideoModel = require('./video.model.js');
-const { StatusCodes } = require('http-status-codes');
-const { asyncHandler } = require('../../../middlewares/async-handler.js');
-const Screenshot = require('../../../../utils/screenshot.js');
+const VideoModel = require("./video.model.js");
+const { StatusCodes } = require("http-status-codes");
+const Screenshot = require("../../../../utils/screenshot.js");
 
 class VideoController {
-	getVideo = asyncHandler(async (req, res, next) => {
-		const { id } = req.params;
-		const video = await VideoModel.getVideo(id);
+  #VideoModel;
+  #StatusCodes;
+  #Screenshot;
 
-		if (!video.length) {
-			return res.status(StatusCodes.NOT_FOUND).json({
-				status: 'fail',
-				request_url: req.originalUrl,
-				message: 'The resource does not exist!',
-			});
-		}
+  constructor() {
+    this.#VideoModel = VideoModel;
+    this.#StatusCodes = StatusCodes;
+    this.#Screenshot = Screenshot;
+  }
 
-		res.status(StatusCodes.OK).json({
-			status: 'success',
-			request_url: req.originalUrl,
-			message: 'The resource was returned successfully!',
-			data: video,
-		});
-	});
+  getVideo = async (req, res) => {
+    const { id } = req.params;
+    const video = await this.#VideoModel.getVideo(id);
 
-	getVideos = asyncHandler(async (req, res, next) => {
-		const videos = await VideoModel.getVideos();
+    if (!video.length) {
+      return res.status(this.#StatusCodes.NOT_FOUND).json({
+        status: "fail",
+        request_url: req.originalUrl,
+        message: "The resource does not exist!",
+      });
+    }
 
-		res.status(StatusCodes.OK).json({
-			status: 'success',
-			request_url: req.originalUrl,
-			message: 'The resources were returned successfully!',
-			data: videos,
-		});
-	});
+    res.status(this.#StatusCodes.OK).json({
+      status: "success",
+      request_url: req.originalUrl,
+      message: "The resource was returned successfully!",
+      data: video,
+    });
+  };
 
-	postVideo = asyncHandler(async (req, res, next) => {
-		const video = await VideoModel.postVideo(req.body, req.file);
-		Screenshot.generate(video, req.file); // generate after 5 sec
+  getVideos = async (req, res) => {
+    const videos = await this.#VideoModel.getVideos();
 
-		res.status(StatusCodes.CREATED).json({
-			status: 'success',
-			request_url: req.originalUrl,
-			message: 'The resource was created successfully!',
-			data: video,
-		});
-	});
+    res.status(this.#StatusCodes.OK).json({
+      status: "success",
+      request_url: req.originalUrl,
+      message: "The resources were returned successfully!",
+      data: videos,
+    });
+  };
 
-	updateVideo = asyncHandler(async (req, res, next) => {
-		const { id } = req.params;
-		const video = await VideoModel.updateVideo(id, req.body);
+  postVideo = async (req, res) => {
+    const video = await this.#VideoModel.postVideo(req.body, req.file);
+    this.#Screenshot.generate(video, req.file); // generate after 5 sec
 
-		res.status(StatusCodes.OK).json({
-			status: 'success',
-			request_url: req.originalUrl,
-			message: 'The resource was updated successfully!',
-			data: video,
-		});
-	});
+    res.status(this.#StatusCodes.CREATED).json({
+      status: "success",
+      request_url: req.originalUrl,
+      message: "The resource was created successfully!",
+      data: video,
+    });
+  };
 
-	deleteVideo = asyncHandler(async (req, res, next) => {
-		const { id } = req.params;
-		const video = await VideoModel.deleteVideo(id);
+  updateVideo = async (req, res) => {
+    const { id } = req.params;
+    const video = await this.#VideoModel.updateVideo(id, req.body);
 
-		if (!video.length) {
-			return res.status(StatusCodes.NOT_FOUND).json({
-				status: 'fail',
-				request_url: req.originalUrl,
-				message: 'The resource does not exist!',
-			});
-		}
+    res.status(this.#StatusCodes.OK).json({
+      status: "success",
+      request_url: req.originalUrl,
+      message: "The resource was updated successfully!",
+      data: video,
+    });
+  };
 
-		res.status(StatusCodes.OK).json({
-			status: 'success',
-			request_url: req.originalUrl,
-			message: 'The resource was deleted successfully!',
-			data: video,
-		});
-	});
+  deleteVideo = async (req, res) => {
+    const { id } = req.params;
+    const video = await this.#VideoModel.deleteVideo(id);
+
+    if (!video.length) {
+      return res.status(StatusCodes.NOT_FOUND).json({
+        status: "fail",
+        request_url: req.originalUrl,
+        message: "The resource does not exist!",
+      });
+    }
+
+    res.status(this.#StatusCodes.OK).json({
+      status: "success",
+      request_url: req.originalUrl,
+      message: "The resource was deleted successfully!",
+      data: video,
+    });
+  };
 }
 
 module.exports = new VideoController();
