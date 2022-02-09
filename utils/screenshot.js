@@ -1,73 +1,81 @@
-const ffmpeg = require('fluent-ffmpeg');
-const db = require('../database/db.js');
+const ffmpeg = require("fluent-ffmpeg");
+const db = require("../database/db.js");
 
 class Screenshot {
-	static #capture = (path) => {
-		try {
-			const folder = path
-				.split('/')
-				.splice(0, path.split('/').length - 1)
-				.join('/');
-			const filename = `/${path.split('/').pop().split('.')[0]}.jpg`;
+  #db;
+  #ffmpeg;
 
-			// take screenshot at the 0 second then save it at
-			ffmpeg(path).screenshots({
-				timestamps: ['00:00:00.000'], // hh:mm:ss.xxx
-				folder,
-				filename,
-			});
+  constructor() {
+    this.#db = db;
+    this.#ffmpeg = ffmpeg;
+  }
 
-			return `${folder}${filename}`;
-		} catch (err) {
-			return err;
-		}
-	};
+  static #capture(path) {
+    try {
+      const folder = path
+        .split("/")
+        .splice(0, path.split("/").length - 1)
+        .join("/");
+      const filename = `/${path.split("/").pop().split(".")[0]}.jpg`;
 
-	static #update = async (videoId, path) => {
-		try {
-			const absolutePath = this.#capture(path);
-			const relativePath = absolutePath.slice(absolutePath.indexOf('/upload'));
+      // take screenshot at the 0 second then save it at
+      this.#ffmpeg(path).screenshots({
+        timestamps: ["00:00:00.000"], // hh:mm:ss.xxx
+        folder,
+        filename,
+      });
 
-			// example select with db.raw)
-			// db.raw(
-			// 	`
-			// 	SELECT *
-			// 	FROM video AS v
-			// 	INNER JOIN video_details AS vs
-			// 		ON v.id = vs.video_id
-			// 		WHERE v.id = ?
-			// 		AND v.username = ?
-			// `,
-			// 	[videoId, 'phew'],
-			// );
+      return `${folder}${filename}`;
+    } catch (err) {
+      return err;
+    }
+  }
 
-			// TODO: refactor this!
-			await db
-				.update({ screenshot_path: relativePath })
-				.from('video')
-				.where({ id: videoId });
+  static async #update(videoId, path) {
+    try {
+      const absolutePath = this.#capture(path);
+      const relativePath = absolutePath.slice(absolutePath.indexOf("/upload"));
 
-			await db
-				.update({ absolute_screenshot_path: absolutePath })
-				.from('video_details')
-				.where({ video_id: videoId });
+      // example select with db.raw)
+      // db.raw(
+      // 	`
+      // 	SELECT *
+      // 	FROM video AS v
+      // 	INNER JOIN video_details AS vs
+      // 		ON v.id = vs.video_id
+      // 		WHERE v.id = ?
+      // 		AND v.username = ?
+      // `,
+      // 	[videoId, 'phew'],
+      // );
 
-			console.log('Screenshot has been generated!');
-		} catch (err) {
-			return err;
-		}
-	};
+      // TODO: refactor this!
+      await this.#db
+        .update({ screenshot_path: relativePath })
+        .from("video")
+        .where({ id: videoId });
 
-	static generate = (postedVideo, requestFileObject) => {
-		try {
-			const { id } = postedVideo[0];
-			setTimeout(() => {
-				this.#update(id, requestFileObject.path);
-			}, 5000);
-		} catch (err) {
-			return err;
-		}
-	};
+      await this.#db
+        .update({ absolute_screenshot_path: absolutePath })
+        .from("video_details")
+        .where({ video_id: videoId });
+
+      console.log("Screenshot has been generated!");
+    } catch (err) {
+      return err;
+    }
+  }
+
+  static generate(postedVideo, requestFileObject) {
+    try {
+      const { id } = postedVideo[0];
+      setTimeout(() => {
+        this.#update(id, requestFileObject.path);
+      }, 5000);
+    } catch (err) {
+      return err;
+    }
+  }
 }
 
 module.exports = Screenshot;
