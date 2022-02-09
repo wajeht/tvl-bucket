@@ -1,20 +1,17 @@
-const express = require('express');
+import express from 'express';
+import VideoValidation from './video.validation';
+import VideoController from './video.controller';
+import { uploadVideo } from '../../../middlewares/upload';
+import { validate } from '../../../middlewares/validator';
+
 const router = express.Router();
 
-const { uploadVideo } = require('../../../middlewares/upload.js');
-const { validate } = require('../../../middlewares/validator.js');
-const VideoValidation = require('./video.validation.js');
-const VideoController = require('./video.controller.js');
+router.route('/').get(VideoController.getVideos).post(uploadVideo, validate(VideoValidation.postVideo), VideoController.postVideo);
 
 router
-	.route('/')
-	.get(VideoController.getVideos)
-	.post(uploadVideo, validate(VideoValidation.postVideo), VideoController.postVideo);
+  .route('/:id')
+  .get(validate(VideoValidation.getVideo), VideoController.getVideo)
+  .patch(validate(VideoValidation.updateVideo), uploadVideo, VideoController.updateVideo)
+  .delete(validate(VideoValidation.deleteVideo), VideoController.deleteVideo);
 
-router
-	.route('/:id')
-	.get(validate(VideoValidation.getVideo), VideoController.getVideo)
-	.patch(validate(VideoValidation.updateVideo), uploadVideo, VideoController.updateVideo)
-	.delete(validate(VideoValidation.deleteVideo), VideoController.deleteVideo);
-
-module.exports = router;
+export default router;

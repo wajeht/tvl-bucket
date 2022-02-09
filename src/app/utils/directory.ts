@@ -1,8 +1,8 @@
-const path = require('path');
+import path from 'path';
 const rootDirectory = path.dirname(__dirname);
-const currentDirectory = path.dirname(require.main.filename);
+// const currentDirectory = path.dirname(require.main.filename);
 
-module.exports = {
-	root: rootDirectory,
-	current: currentDirectory,
+export default {
+  root: rootDirectory,
+  // current: currentDirectory,
 };
