@@ -1,5 +1,5 @@
 const StatusCodes = require('http-status-codes').StatusCodes;
-const { env } = require('../../config/env.js');
+const { env } = require('../app/config/env.js');
 
 const notFoundHandler = (req, res, next) => {
 	res.status(StatusCodes.NOT_FOUND).json({

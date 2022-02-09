@@ -1,5 +1,5 @@
 const ffmpeg = require("fluent-ffmpeg");
-const db = require("../database/db.js");
+const db = require("../../database/db.js");
 
 class Screenshot {
   #db;

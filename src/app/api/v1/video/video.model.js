@@ -1,4 +1,4 @@
-const db = require("../../../../database/db.js");
+const db = require("../../../app/database/db.js");
 
 class VideoModel {
   #db;

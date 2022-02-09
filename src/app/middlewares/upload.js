@@ -4,7 +4,7 @@ const multer = require('multer');
 const fs = require('fs');
 const path = require('path');
 
-const makeUserDataFolder = require('../../utils/make-user-data-folder.js');
+const makeUserDataFolder = require('../app/utils/make-user-data-folder.js.js');
 
 const fileFilter = (req, file, cb) => {
 	const fileTypes = /jpeg|jpg|png|gif|mp4|mov|mpeg/;

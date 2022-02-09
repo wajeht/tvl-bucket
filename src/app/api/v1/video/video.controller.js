@@ -1,6 +1,6 @@
 const VideoModel = require("./video.model.js");
 const { StatusCodes } = require("http-status-codes");
-const Screenshot = require("../../../../utils/screenshot.js");
+const Screenshot = require("../../../app/utils/screenshot.js");
 
 class VideoController {
   #VideoModel;
