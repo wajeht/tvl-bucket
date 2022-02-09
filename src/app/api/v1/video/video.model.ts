@@ -24,7 +24,7 @@ class VideoModel {
       })
       .into('video')
       .returning('*')
-      .then(async (res: Array<any>) {
+      .then(async (res: Array<any>) => {
         const { id } = res[0];
         await db
           .insert({
@@ -39,7 +39,7 @@ class VideoModel {
       });
   }
 
-  public updateVideo(id: number, video: object) {
+  public updateVideo(id: number, video: any) {
     return this.db
       .update({
         screenshot_path: video.screenshot_path,

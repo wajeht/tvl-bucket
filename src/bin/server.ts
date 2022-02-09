@@ -1,8 +1,8 @@
-#!/usr/bin/env node
+import app from '../app/app';
 
-const app = require('../src/app.js');
-const { port } = require('../config/env.js');
+import env from '../config/env';
+const { port } = env;
 
 app.listen(port, () => {
-	console.log(`http://localhost:${port}`);
+  console.log(`http://localhost:${port}`);
 });

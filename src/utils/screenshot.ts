@@ -1,5 +1,5 @@
 import ffmpeg from 'fluent-ffmpeg';
-import db from '../../database/db';
+import db from '../database/db';
 
 class Screenshot {
   private db: any;

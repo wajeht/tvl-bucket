@@ -1,4 +1,6 @@
-import database from '../config/env';
+import env from '../config/env';
+
+const { database } = env;
 
 export default {
   development: {

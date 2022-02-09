@@ -1,9 +1,8 @@
+import dotenv from 'dotenv';
 import path from 'path';
-import root from '../app/utils/directory';
+import { root } from '../utils/directory';
 
-require('dotenv').config({
-  path: path.join(root, '.env'),
-});
+dotenv.config({ path: path.join(root, '.env') });
 
 export default {
   database: {

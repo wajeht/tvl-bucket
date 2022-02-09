@@ -1,10 +1,6 @@
-import  env  from'../config/env';
-
+import Knex from 'knex';
 import options from './knexfile';
+// import config from '../config/env';
+// const { env } = config;
 
-import { Knex, knex } from 'knex'
-
-
-import db from'knex'options[env];
-
-module.exports = db;
+export default Knex(options.development);

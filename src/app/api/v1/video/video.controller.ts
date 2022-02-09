@@ -1,6 +1,6 @@
 import VideoModel from './video.model';
 import { StatusCodes } from 'http-status-codes';
-import Screenshot from '../../../utils/screenshot';
+import Screenshot from '../../../../utils/screenshot';
 import { Request, Response } from 'express';
 
 class VideoController {

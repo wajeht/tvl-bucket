@@ -1,8 +1,10 @@
 import path from 'path';
-const rootDirectory = path.dirname(__dirname);
+const cur: string = path.dirname(__dirname);
+const root: string = path.join(cur, '../');
+
 // const currentDirectory = path.dirname(require.main.filename);
 
-export default {
-  root: rootDirectory,
+export {
+  root,
   // current: currentDirectory,
 };
