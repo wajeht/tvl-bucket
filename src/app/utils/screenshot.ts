@@ -1,26 +1,26 @@
-const ffmpeg = require("fluent-ffmpeg");
-const db = require("../../database/db.js");
+import ffmpeg from 'fluent-ffmpeg';
+import db from '../../database/db';
 
 class Screenshot {
-  #db;
-  #ffmpeg;
+  private db: any;
+  private ffmpeg: any;
 
   constructor() {
-    this.#db = db;
-    this.#ffmpeg = ffmpeg;
+    this.db = db;
+    this.ffmpeg = ffmpeg;
   }
 
-  static #capture(path) {
+  private static capture(path: string) {
     try {
       const folder = path
-        .split("/")
-        .splice(0, path.split("/").length - 1)
-        .join("/");
-      const filename = `/${path.split("/").pop().split(".")[0]}.jpg`;
+        .split('/')
+        .splice(0, path.split('/').length - 1)
+        .join('/');
+      const filename = `/${path.split('/').pop().split('.')[0]}.jpg`;
 
       // take screenshot at the 0 second then save it at
-      this.#ffmpeg(path).screenshots({
-        timestamps: ["00:00:00.000"], // hh:mm:ss.xxx
+      this.ffmpeg(path).screenshots({
+        timestamps: ['00:00:00.000'], // hh:mm:ss.xxx
         folder,
         filename,
       });
@@ -31,10 +31,10 @@ class Screenshot {
     }
   }
 
-  static async #update(videoId, path) {
+  private static async update(videoId: number, path: string) {
     try {
-      const absolutePath = this.#capture(path);
-      const relativePath = absolutePath.slice(absolutePath.indexOf("/upload"));
+      const absolutePath = this.capture(path);
+      const relativePath = absolutePath.slice(absolutePath.indexOf('/upload'));
 
       // example select with db.raw)
       // db.raw(
@@ -50,23 +50,17 @@ class Screenshot {
       // );
 
       // TODO: refactor this!
-      await this.#db
-        .update({ screenshot_path: relativePath })
-        .from("video")
-        .where({ id: videoId });
+      await this.db.update({ screenshot_path: relativePath }).from('video').where({ id: videoId });
 
-      await this.#db
-        .update({ absolute_screenshot_path: absolutePath })
-        .from("video_details")
-        .where({ video_id: videoId });
+      await this.db.update({ absolute_screenshot_path: absolutePath }).from('video_details').where({ video_id: videoId });
 
-      console.log("Screenshot has been generated!");
+      console.log('Screenshot has been generated!');
     } catch (err) {
       return err;
     }
   }
 
-  static generate(postedVideo, requestFileObject) {
+  public static generate(postedVideo: number, requestFileObject: any) {
     try {
       const { id } = postedVideo[0];
       setTimeout(() => {
@@ -78,4 +72,4 @@ class Screenshot {
   }
 }
 
-module.exports = Screenshot;
+export default Screenshot;

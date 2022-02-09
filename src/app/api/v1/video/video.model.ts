@@ -1,30 +1,30 @@
-const db = require("../../../app/database/db.js");
+import db from '../../../../database/db';
 
 class VideoModel {
-  #db;
+  private db: any;
 
   constructor() {
-    this.#db = db;
+    this.db = db;
   }
 
-  getVideo(id) {
-    return this.#db.select("*").from("video").where({ id });
+  public getVideo(id: number): Promise<void> {
+    return this.db.select('*').from('video').where({ id });
   }
 
-  getVideos() {
-    return this.#db.select("*").from("video");
+  public getVideos() {
+    return this.db.select('*').from('video');
   }
 
-  postVideo(body, video) {
-    return this.#db
+  public postVideo(body: any, video: any): Promise<void> {
+    return this.db
       .insert({
         username: body.username,
         user_id: body.user_id,
-        video_path: video.path.slice(video.path.indexOf("/upload")),
+        video_path: video.path.slice(video.path.indexOf('/upload')),
       })
-      .into("video")
-      .returning("*")
-      .then(async (res) => {
+      .into('video')
+      .returning('*')
+      .then(async (res: Array<any>) {
         const { id } = res[0];
         await db
           .insert({
@@ -34,25 +34,25 @@ class VideoModel {
             video_id: id,
             absolute_video_path: video.path,
           })
-          .into("video_details");
+          .into('video_details');
         return res;
       });
   }
 
-  updateVideo(id, video) {
-    return this.#db
+  public updateVideo(id: number, video: object) {
+    return this.db
       .update({
         screenshot_path: video.screenshot_path,
         video_path: video.video_path,
       })
-      .from("video")
+      .from('video')
       .where({ id })
-      .returning("*");
+      .returning('*');
   }
 
-  deleteVideo(id) {
-    return this.#db.del().from("video").where({ id }).returning("*");
+  public deleteVideo(id: number): Promise<void> {
+    return this.db.del().from('video').where({ id }).returning('*');
   }
 }
 
-module.exports = new VideoModel();
+export default new VideoModel();

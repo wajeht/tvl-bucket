@@ -1,27 +1,20 @@
-const path = require('path');
-const fs = require('fs');
-const { root } = require('./directory.js');
+import path from 'path';
+import fs from 'fs';
+import { root } from './directory';
 
-const makeUserDataFolder = (username) => {
-	try {
-		const currentWeek = new Date().toLocaleDateString().split('/').join('-');
-		const folder = path.join(
-			root,
-			'src',
-			'public',
-			'upload',
-			username,
-			currentWeek,
-		);
-		if (!fs.existsSync(path)) {
-			fs.mkdir(folder, { recursive: true }, (err) => {
-				if (err) throw err;
-			});
-		}
-		return folder;
-	} catch (err) {
-		console.log(err);
-	}
+const makeUserDataFolder = (username: string): string => {
+  try {
+    const currentWeek = new Date().toLocaleDateString().split('/').join('-');
+    const folder = path.join(root, 'src', 'public', 'upload', username, currentWeek);
+    if (!fs.existsSync(path)) {
+      fs.mkdir(folder, { recursive: true }, err => {
+        if (err) throw err;
+      });
+    }
+    return folder;
+  } catch (err: any) {
+    return err;
+  }
 };
 
-module.exports = makeUserDataFolder;
+export default makeUserDataFolder;
