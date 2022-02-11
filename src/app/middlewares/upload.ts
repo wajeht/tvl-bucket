@@ -28,7 +28,7 @@ const fileStorage = multer.diskStorage({
     }, 5);
   },
   filename: (req: Request, file: Express.Multer.File, cb: FileNameCallback): void => {
-    cb(null, uuidv4 + '.' + file.originalname.split('.')[1]);
+    cb(null, uuidv4() + '.' + file.originalname.split('.')[1]);
   },
 });
 
