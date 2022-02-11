@@ -11,7 +11,12 @@ class VideoValidation {
    */
   postVideo = [
     body('username').trim().notEmpty().withMessage('The value must not be empty!'),
-    body('user_id').trim().notEmpty().withMessage('The value must not be empty!').isInt().withMessage('The value must be an integer!'),
+    body('user_id')
+      .trim()
+      .notEmpty()
+      .withMessage('The value must not be empty!')
+      .isInt()
+      .withMessage('The value must be an integer!'),
     check('video')
       .custom((value, { req }) => {
         if (req.file) {
@@ -25,7 +30,14 @@ class VideoValidation {
   /**
    * deleteVideo Controller Validation
    */
-  deleteVideo = [param('id').trim().notEmpty().withMessage('The value must not be empty!').isInt().withMessage('The value must be an integer!')];
+  deleteVideo = [
+    param('id')
+      .trim()
+      .notEmpty()
+      .withMessage('The value must not be empty!')
+      .isInt()
+      .withMessage('The value must be an integer!'),
+  ];
 
   /**
    * TODO:// test this schema

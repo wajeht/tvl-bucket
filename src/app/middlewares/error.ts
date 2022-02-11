@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import { env } from '../../config/env';
+import config from '../../config/env';
+const { env } = config;
 
 const notFoundHandler = (req: Request, res: Response, next: NextFunction) => {
   res.status(StatusCodes.NOT_FOUND).json({
@@ -15,7 +16,9 @@ const errorHandler = (err: Error, req: Request, res: Response, next: NextFunctio
     status: 'fail',
     request_url: req.originalUrl,
     message:
-      env == 'development' ? err.stack : 'The server encountered an internal error or misconfiguration and was unable to complete your request.',
+      env == 'development'
+        ? err.stack
+        : 'The server encountered an internal error or misconfiguration and was unable to complete your request.',
   });
 };
 

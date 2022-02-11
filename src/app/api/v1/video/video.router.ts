@@ -2,11 +2,14 @@ import express from 'express';
 import VideoValidation from './video.validation';
 import VideoController from './video.controller';
 import { uploadVideo } from '../../../middlewares/upload';
-import { validate } from '../../../middlewares/validator';
+import validate from '../../../middlewares/validator'; //
 
 const router = express.Router();
 
-router.route('/').get(VideoController.getVideos).post(uploadVideo, validate(VideoValidation.postVideo), VideoController.postVideo);
+router
+  .route('/')
+  .get(VideoController.getVideos)
+  .post(uploadVideo, validate(VideoValidation.postVideo), VideoController.postVideo);
 
 router
   .route('/:id')
