@@ -3,7 +3,7 @@ import path from 'path';
 
 class File {
   private filePath: string;
-  private file: object;
+  private file: any;
 
   /**
    *
@@ -27,14 +27,16 @@ class File {
    *
    * @return Formatted string.
    */
-  private getHumanReadableFileSize = (bytes, si = false, dp = 1) => {
+  private getHumanReadableFileSize = (bytes: any, si = false, dp = 1) => {
     const thresh = si ? 1000 : 1024;
 
     if (Math.abs(bytes) < thresh) {
       return bytes + ' B';
     }
 
-    const units = si ? ['kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'] : ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
+    const units = si
+      ? ['kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+      : ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
     let u = -1;
     const r = 10 ** dp;
 
@@ -51,7 +53,7 @@ class File {
    * @returns file size in human readable format
    */
   private getFileSize = async () => {
-    let fileSize = await fs.promises.stat(this.filePath);
+    let fileSize: any = await fs.promises.stat(this.filePath);
     fileSize = this.getHumanReadableFileSize(fileSize.size);
     return fileSize;
   };
