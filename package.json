@@ -6,7 +6,7 @@
   "scripts": {
     "clean": "rimraf dist",
     "build": "rimraf dist && tsc",
-    "serve": "node dist/bin/server.js",
+    "start": "npm run build && node dist/bin/server.js",
     "dev": "nodemon src/bin/server.ts",
     "generate:api": "node bin/generate-api-key.js",
     "migrate:make": "knex migrate:make --knexfile=./database/knexfile.js",
