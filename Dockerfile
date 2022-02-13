@@ -1,8 +1,9 @@
-FROM node:latest
+FROM node:alpine
 
 WORKDIR /usr/src/app
 
 COPY package.json package-lock*.json ./
+COPY tsconfig.json ./
 
 RUN npm install npm@latest -g
 
@@ -10,6 +11,6 @@ RUN npm install
 
 COPY . .
 
-EXPOSE 3000
+EXPOSE 4200
 
-CMD ["npm", "start"]
+CMD [ "node", "./dist/bin/server.js" ]
