@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Application } from 'express';
 import path from 'path';
 import compression from 'compression';
 import helmet from 'helmet';
@@ -7,7 +7,7 @@ import v1 from './api/v1/v1.api';
 import auth from './middlewares/auth';
 import { errorHandler, notFoundHandler } from './middlewares/error';
 
-const app = express();
+const app: Application = express();
 
 app.use(helmet());
 app.use(compression());

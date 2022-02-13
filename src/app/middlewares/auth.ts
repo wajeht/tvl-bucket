@@ -1,6 +1,6 @@
-import { Request, Response, NextFunction } from 'express';
 import bcrypt from 'bcryptjs';
 import db from '../../database/db';
+import { Request, Response, NextFunction } from 'express';
 import { StatusCodes } from 'http-status-codes';
 
 const auth = async (req: Request, res: Response, next: NextFunction) => {

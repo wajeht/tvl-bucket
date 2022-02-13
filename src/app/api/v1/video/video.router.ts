@@ -1,10 +1,10 @@
-import express from 'express';
 import VideoValidation from './video.validation';
 import VideoController from './video.controller';
-import { uploadVideo } from '../../../middlewares/upload';
 import validate from '../../../middlewares/validator'; //
+import express, { Router } from 'express';
+import { uploadVideo } from '../../../middlewares/upload';
 
-const router = express.Router();
+const router: Router = express.Router();
 
 router
   .route('/')

@@ -1,7 +1,6 @@
-import express from 'express';
-const router = express.Router();
-
+import express, { Router } from 'express';
 import videoRouter from './video/video.router';
+const router: Router = express.Router();
 
 router.use('/video', videoRouter);
 
