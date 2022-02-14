@@ -5,6 +5,7 @@
   "main": "bin/server.js",
   "scripts": {
     "clean": "rimraf dist",
+    "clean:data": "rimraf src/public/upload",
     "build": "rimraf dist && tsc",
     "start": "npm run build && npm run db:init && node dist/bin/server.js",
     "dev": "nodemon src/bin/server.ts",
