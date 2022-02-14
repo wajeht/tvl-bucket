@@ -6,6 +6,7 @@ export default {
   development: {
     client: 'pg',
     connection: {
+      host: database.host,
       database: database.database,
       user: database.username,
       password: database.password,

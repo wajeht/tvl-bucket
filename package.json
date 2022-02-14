@@ -6,14 +6,15 @@
   "scripts": {
     "clean": "rimraf dist",
     "build": "rimraf dist && tsc",
-    "start": "npm run build && node dist/bin/server.js",
+    "start": "npm run build && npm run db:init && node dist/bin/server.js",
     "dev": "nodemon src/bin/server.ts",
-    "generate:api": "node dist/bin/generate-api-key.js",
-    "migrate:make": "knex migrate:make --knexfile=./database/knexfile.js",
-    "migrate:latest": "knex migrate:latest --knexfile=./database/knexfile.js",
-    "migrate:rollback": "knex migrate:rollback --knexfile=./database/knexfile.js",
-    "seed:make": "knex seed:make --knexfile=./database/knexfile.js",
-    "seed:run": "knex seed:run --knexfile=./database/knexfile.js"
+    "generate:api": "ts-node src/bin/generate-api-key.ts",
+    "db:init": "knex migrate:rollback --knexfile=./dist/database/knexfile.js && knex migrate:latest --knexfile=./dist/database/knexfile.js",
+    "migrate:make": "knex migrate:make --knexfile=./src/database/knexfile.ts",
+    "migrate:latest": "knex migrate:latest --knexfile=./src/database/knexfile.ts",
+    "migrate:rollback": "knex migrate:rollback --knexfile=./src/database/knexfile.ts",
+    "seed:make": "knex seed:make --knexfile=./src/database/knexfile.ts",
+    "seed:run": "knex seed:run --knexfile=./src/database/knexfile.ts"
   },
   "keywords": [
     "video",

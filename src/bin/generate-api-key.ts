@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 import crypto from 'crypto';
 import bcrypt from 'bcryptjs';
 import db from '../database/db';
